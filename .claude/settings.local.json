@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__perplexity__ask_perplexity"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

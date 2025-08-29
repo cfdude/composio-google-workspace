@@ -1,0 +1,43 @@
+{
+  "name": "composio-google-workspace",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "format": "prettier --write src/**/*.ts",
+    "format:check": "prettier --check src/**/*.ts"
+  },
+  "keywords": [
+    "composio",
+    "ai",
+    "agents",
+    "typescript",
+    "google-workspace"
+  ],
+  "author": "",
+  "license": "ISC",
+  "description": "AI agent project using Composio.dev for Google Workspace integrations",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.52.0",
+    "@composio/anthropic": "^0.1.48",
+    "@composio/core": "^0.1.48",
+    "dotenv": "^17.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "@typescript-eslint/eslint-plugin": "^8.41.0",
+    "@typescript-eslint/parser": "^8.41.0",
+    "eslint": "^9.34.0",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.2",
+    "vite": "^6.3.5"
+  }
+}
