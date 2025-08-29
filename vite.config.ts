@@ -4,10 +4,13 @@ import { resolve } from 'path'
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, 'src/index.ts'),
+      entry: {
+        index: resolve(__dirname, 'src/index.ts'),
+        service: resolve(__dirname, 'src/service.ts')
+      },
       name: 'ComposioGoogleWorkspace',
       formats: ['es'],
-      fileName: 'index'
+      fileName: (format, entryName) => `${entryName}.js`
     },
     target: 'node18',
     rollupOptions: {
@@ -16,6 +19,7 @@ export default defineConfig({
         '@composio/anthropic', 
         '@anthropic-ai/sdk',
         'dotenv',
+        'express',
         /^node:/
       ]
     },
