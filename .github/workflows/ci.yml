@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  lint-and-format:
+    name: Lint, Format & Type Check
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run TypeScript type checking
+        run: npm run typecheck
+      
+      - name: Run ESLint
+        run: npm run lint
+      
+      - name: Check Prettier formatting
+        run: npm run format:check
+      
+      - name: Build project
+        run: npm run build
+
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run tests
+        run: npm test
+        continue-on-error: true  # Allow for projects without tests yet

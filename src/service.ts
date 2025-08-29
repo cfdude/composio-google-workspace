@@ -6,7 +6,7 @@ import { config } from 'dotenv'
 config()
 
 const PORT = process.env.PORT || 8080
-const USER_ID = process.env.USER_GOOGLE_EMAIL || 'rsherman@velocityinteractive.com'
+const USER_ID = process.env.USER_GOOGLE_EMAIL
 
 /**
  * Service wrapper for Google Workspace MCP Server
@@ -48,8 +48,15 @@ class GoogleWorkspaceService {
       })
     })
 
-    // Graceful shutdown
+    // Graceful shutdown (requires auth token)
     this.app.get('/shutdown', (req, res) => {
+      const authToken = req.headers.authorization
+      const expectedToken = process.env.SHUTDOWN_TOKEN
+      
+      if (!expectedToken || authToken !== `Bearer ${expectedToken}`) {
+        return res.status(401).json({ error: 'Unauthorized' })
+      }
+      
       res.json({ message: 'Shutting down gracefully...' })
       setTimeout(() => process.exit(0), 1000)
     })

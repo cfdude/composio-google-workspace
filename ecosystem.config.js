@@ -2,7 +2,7 @@ module.exports = {
   apps: [{
     name: 'google-workspace-tools',
     script: 'dist/service.js',
-    cwd: '/Users/robsherman/Servers/composio-google-workspace',
+    cwd: process.cwd(),
     instances: 1,
     exec_mode: 'fork',
     
