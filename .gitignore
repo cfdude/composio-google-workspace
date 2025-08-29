@@ -86,3 +86,7 @@ Thumbs.db
 # Temporary folders
 tmp/
 temp/
+
+# Apps
+.claude
+.serena

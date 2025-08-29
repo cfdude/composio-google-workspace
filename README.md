@@ -1,17 +1,17 @@
-# Composio Google Workspace Integration
+# Google Workspace MCP Service
 
-A modern Node.js TypeScript project that demonstrates AI agent capabilities using [Composio.dev](https://composio.dev) for Google Workspace automation. Built with ES modules, Vite, and comprehensive tooling.
+A production-ready Google Workspace MCP service providing 84 specialized tools for comprehensive Google Workspace automation. Designed to run as a persistent background service integrating with Rube MCP for centralized OAuth authentication.
 
 ## 🚀 Features
 
-- **AI Agent Integration**: Leverages Composio's 3000+ tools for Google Workspace automation
+- **84 Custom Tools**: Complete Google Workspace API coverage (83 tools + 1 auth via Composio)
+- **MCP Service**: Persistent background service with PM2 process management
+- **Centralized Auth**: OAuth handled by Composio/Rube (no client secrets on desktops)
 - **TypeScript**: Full type safety with modern ES2022 features
 - **ES Modules**: Native ES module support throughout
-- **Vite**: Fast development and optimized builds
-- **Google Workspace**: Gmail, Calendar, Drive, and Sheets integration
-- **Custom Tools**: Extensible custom tool creation framework
-- **Authentication**: OAuth2 flow handling for Google services
-- **Workflows**: Automated cross-application workflows
+- **Auto-startup**: Configurable boot-time service activation
+- **Health Monitoring**: Built-in health endpoints for service monitoring
+- **PKCE Compliant**: Solves security compliance for remote workforce
 
 ## 📋 Prerequisites
 

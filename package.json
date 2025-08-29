@@ -8,6 +8,13 @@
     "build": "vite build",
     "preview": "vite preview",
     "start": "node dist/index.js",
+    "service": "node dist/service.js",
+    "service:start": "./scripts/start-service.sh",
+    "service:setup": "./scripts/setup-autostart.sh", 
+    "service:stop": "pm2 stop google-workspace-tools",
+    "service:restart": "pm2 restart google-workspace-tools",
+    "service:logs": "pm2 logs google-workspace-tools",
+    "service:status": "pm2 status google-workspace-tools",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix",
@@ -28,7 +35,10 @@
     "@anthropic-ai/sdk": "^0.52.0",
     "@composio/anthropic": "^0.1.48",
     "@composio/core": "^0.1.48",
-    "dotenv": "^17.2.1"
+    "@types/express": "^5.0.3",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@types/node": "^24.3.0",
