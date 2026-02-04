@@ -1,4 +1,4 @@
-import { composio, executeTool, getAvailableTools } from '../composio-client.js'
+import { composio as _composio, executeTool, getAvailableTools } from '../composio-client.js'
 
 /**
  * AI Agent for Google Workspace automation
@@ -18,11 +18,11 @@ export class GoogleWorkspaceAgent {
   getCapabilities(): string[] {
     return [
       'Email Management',
-      'Calendar Operations', 
+      'Calendar Operations',
       'Document Processing',
       'Drive File Management',
       'Meeting Scheduling',
-      'Task Automation'
+      'Task Automation',
     ]
   }
 
@@ -32,7 +32,7 @@ export class GoogleWorkspaceAgent {
   async initialize(services: string[] = ['gmail', 'googlecalendar', 'googledrive']): Promise<void> {
     try {
       console.log(`🤖 Initializing Google Workspace Agent for user: ${this.userId}`)
-      
+
       // Check available tools for each service
       for (const service of services) {
         const tools = await getAvailableTools([service], this.userId)
@@ -43,9 +43,8 @@ export class GoogleWorkspaceAgent {
           console.log(`⚠️  ${service} not connected - authentication required`)
         }
       }
-      
+
       console.log(`🚀 Agent initialized with ${this.connectedServices.size} connected services`)
-      
     } catch (error) {
       console.error('❌ Failed to initialize agent:', error)
       throw error
@@ -55,11 +54,16 @@ export class GoogleWorkspaceAgent {
   /**
    * Send an email using Gmail
    */
-  async sendEmail(to: string, subject: string, body: string, options?: {
-    cc?: string
-    bcc?: string
-    attachments?: string[]
-  }): Promise<any> {
+  async sendEmail(
+    to: string,
+    subject: string,
+    body: string,
+    options?: {
+      cc?: string
+      bcc?: string
+      attachments?: string[]
+    }
+  ): Promise<any> {
     if (!this.connectedServices.has('gmail')) {
       throw new Error('Gmail not connected. Please authenticate first.')
     }
@@ -68,7 +72,7 @@ export class GoogleWorkspaceAgent {
       to,
       subject,
       body,
-      ...options
+      ...options,
     }
 
     console.log(`📧 Sending email to ${to}: "${subject}"`)
@@ -86,7 +90,7 @@ export class GoogleWorkspaceAgent {
     const searchParams = {
       maxResults,
       query: query || 'in:inbox',
-      userId: 'me'
+      userId: 'me',
     }
 
     console.log(`📬 Fetching ${maxResults} recent emails`)
@@ -115,7 +119,7 @@ export class GoogleWorkspaceAgent {
       end: { dateTime: event.end },
       description: event.description,
       attendees: event.attendees?.map(email => ({ email })),
-      location: event.location
+      location: event.location,
     })
   }
 
@@ -131,7 +135,7 @@ export class GoogleWorkspaceAgent {
       maxResults,
       timeMin: timeMin || new Date().toISOString(),
       singleEvents: true,
-      orderBy: 'startTime'
+      orderBy: 'startTime',
     }
 
     console.log(`📅 Fetching ${maxResults} upcoming events`)
@@ -149,7 +153,7 @@ export class GoogleWorkspaceAgent {
     const uploadParams = {
       name: filename,
       content,
-      parents: parentFolderId ? [parentFolderId] : undefined
+      parents: parentFolderId ? [parentFolderId] : undefined,
     }
 
     console.log(`📁 Uploading file to Drive: "${filename}"`)
@@ -166,7 +170,7 @@ export class GoogleWorkspaceAgent {
 
     const searchParams = {
       q: query,
-      pageSize: maxResults
+      pageSize: maxResults,
     }
 
     console.log(`🔍 Searching Drive files: "${query}"`)
@@ -183,14 +187,14 @@ export class GoogleWorkspaceAgent {
     attendees: string[]
     agenda?: string
     location?: string
-  }): Promise<{ event: any, emailsSent: any[] }> {
+  }): Promise<{ event: any; emailsSent: any[] }> {
     console.log(`🤝 Orchestrating meeting workflow: "${meeting.title}"`)
-    
+
     // Create calendar event
     const event = await this.createCalendarEvent(meeting)
-    
+
     // Send email invites with agenda
-    const emailPromises = meeting.attendees.map(async (attendee) => {
+    const emailPromises = meeting.attendees.map(async attendee => {
       const emailBody = `
 Hi,
 
@@ -206,17 +210,13 @@ Please confirm your attendance.
 Best regards
       `.trim()
 
-      return await this.sendEmail(
-        attendee,
-        `Meeting Invite: ${meeting.title}`,
-        emailBody
-      )
+      return await this.sendEmail(attendee, `Meeting Invite: ${meeting.title}`, emailBody)
     })
 
     const emailsSent = await Promise.all(emailPromises)
-    
+
     console.log(`✅ Meeting workflow completed: Event created, ${emailsSent.length} invites sent`)
-    
+
     return { event, emailsSent }
   }
 
@@ -226,17 +226,17 @@ Best regards
   async generateDailySummary(date?: string): Promise<string> {
     const targetDate = date || new Date().toISOString().split('T')[0]
     console.log(`📊 Generating daily summary for ${targetDate}`)
-    
+
     try {
       // Get emails from today
       const emailQuery = `after:${targetDate} before:${targetDate}`
       const emails = await this.getRecentEmails(50, emailQuery)
-      
+
       // Get calendar events for today
       const dayStart = `${targetDate}T00:00:00Z`
-      const dayEnd = `${targetDate}T23:59:59Z`
+      const _dayEnd = `${targetDate}T23:59:59Z`
       const events = await this.getUpcomingEvents(20, dayStart)
-      
+
       // Generate summary
       const summary = `
 📅 Daily Summary for ${targetDate}
@@ -256,10 +256,9 @@ Best regards
 
 Generated at ${new Date().toLocaleString()}
       `.trim()
-      
+
       console.log('✅ Daily summary generated')
       return summary
-      
     } catch (error) {
       console.error('❌ Failed to generate daily summary:', error)
       return `Failed to generate summary: ${error}`
@@ -274,7 +273,7 @@ Generated at ${new Date().toLocaleString()}
       userId: this.userId,
       connectedServices: Array.from(this.connectedServices),
       capabilities: this.getCapabilities(),
-      ready: this.connectedServices.size > 0
+      ready: this.connectedServices.size > 0,
     }
   }
 }
