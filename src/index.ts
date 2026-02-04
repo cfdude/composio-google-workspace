@@ -75,7 +75,7 @@ export class GoogleWorkspaceMCP {
       }),
       execute: async (input, _connectionConfig) => {
         // Implementation will use Google Gmail API via connectionConfig
-        const { message_ids, user_google_email, include_attachments = false } = input
+        const { message_ids, user_google_email, include_attachments: _include_attachments = false } = input
         return {
           data: { 
             messages: [], // Will implement actual Gmail API calls

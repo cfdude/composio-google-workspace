@@ -1,4 +1,4 @@
-import { composio, executeTool, getAvailableTools } from '../composio-client.js'
+import { composio as _composio, executeTool, getAvailableTools } from '../composio-client.js'
 
 /**
  * AI Agent for Google Workspace automation
@@ -234,7 +234,7 @@ Best regards
       
       // Get calendar events for today
       const dayStart = `${targetDate}T00:00:00Z`
-      const dayEnd = `${targetDate}T23:59:59Z`
+      const _dayEnd = `${targetDate}T23:59:59Z`
       const events = await this.getUpcomingEvents(20, dayStart)
       
       // Generate summary
